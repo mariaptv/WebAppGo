@@ -1,12 +1,13 @@
 package main
 
 import (
-	"bookings-udemy/pkg/config"
-	"bookings-udemy/pkg/handlers"
-	"bookings-udemy/pkg/render"
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/mariaptv/WebAppGo/pkg/config"
+	"github.com/mariaptv/WebAppGo/pkg/handlers"
+	"github.com/mariaptv/WebAppGo/pkg/render"
 )
 
 const portNumber = ":8080"

@@ -1,3 +1,3 @@
-module bookings-udemy
+module github.com/mariaptv/WebAppGo
 
-go 1.15
+go 1.23.3

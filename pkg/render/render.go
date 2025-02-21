@@ -8,7 +8,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/yourusername/yourproject/config"
+	"github.com/mariaptv/WebAppGo/pkg/config"
+
 )
 
 var functions = template.FuncMap{}

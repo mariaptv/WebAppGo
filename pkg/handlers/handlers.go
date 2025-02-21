@@ -1,10 +1,25 @@
 package handlers
 
 import (
-	"bookings-udemy/pkg/render"
+	"github.com/mariaptv/WebAppGo/pkg/config"
+	"github.com/mariaptv/WebAppGo/pkg/render"
 	"net/http"
 )
 
+var Repo *Repository
+type Repository struct{
+	App *config.AppConfig
+}
+
+func NewRepo(a *config.AppConfig) *Repository {
+	return &Repository{
+		App: a,
+	}
+}
+
+func NewHandlers(r *Repository) {
+	Repo = r
+}
 // Home is the handler for the home page
 func Home(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "home.page.tmpl")
