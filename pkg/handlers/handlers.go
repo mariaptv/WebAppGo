@@ -1,13 +1,16 @@
 package handlers
 
 import (
-	"github.com/mariaptv/WebAppGo/pkg/config"
-	"github.com/mariaptv/WebAppGo/pkg/render"
 	"net/http"
+
+	"github.com/mariaptv/WebAppGo/pkg/config"
+	"github.com/mariaptv/WebAppGo/pkg/models"
+	"github.com/mariaptv/WebAppGo/pkg/render"
 )
 
 var Repo *Repository
-type Repository struct{
+
+type Repository struct {
 	App *config.AppConfig
 }
 
@@ -20,12 +23,17 @@ func NewRepo(a *config.AppConfig) *Repository {
 func NewHandlers(r *Repository) {
 	Repo = r
 }
+
 // Home is the handler for the home page
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl")
+	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About is the handler for the about page
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "about.page.tmpl")
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, again."
+	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }

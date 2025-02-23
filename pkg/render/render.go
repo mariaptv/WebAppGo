@@ -3,12 +3,13 @@ package render
 import (
 	"bytes"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
+	"text/template"
 
 	"github.com/mariaptv/WebAppGo/pkg/config"
+	"github.com/mariaptv/WebAppGo/pkg/models"
 )
 
 var functions = template.FuncMap{}
@@ -19,11 +20,21 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-// RenderTemplate renders a template
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	// get the template cache from the app config
+func AddDefaultData(td *models.TemplateData) *models.TemplateData {
 
-	tc := app.TemplateCache
+	return td
+}
+
+// RenderTemplate renders a template
+func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+	var tc map[string]*template.Template
+
+	// get the template cache from the app config
+	if app.UseCache {
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCache()
+	}
 
 	t, ok := tc[tmpl]
 	if !ok {
@@ -31,6 +42,8 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 	}
 
 	buf := new(bytes.Buffer)
+
+	td = AddDefaultData(td)
 
 	_ = t.Execute(buf, nil)
 
