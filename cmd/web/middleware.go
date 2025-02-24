@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"fmt"
+	"github.com/justinas/nosurf"
 )
 
 func WriteToConsole(next http.Handler) http.Handler {
@@ -11,4 +12,15 @@ func WriteToConsole(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 
 	})
+}
+
+func NoSurf(next http.Handler) http.Handler {
+	csfrHandler := nosurf.New(next)
+	csfrHandler.SetBaseCookie(http.Cookie{
+		HttpOnly: true,
+		Path:	 "/",
+		Secure:	 false,
+		SameSite: http.SameSiteLaxMode,
+	})
+	return csfrHandler
 }

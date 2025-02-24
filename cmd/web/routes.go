@@ -14,10 +14,12 @@ func route(app *config.AppConfig) http.Handler {
 	// mux.Get("/", http.HandlerFunc(handlers.Repo.Home))
 	// mux.Get("/about", http.HandlerFunc(handlers.Repo.About))
 
+	//create a new router
 	mux := chi.NewRouter()
-
+	//Use middleware
 	mux.Use(middleware.Recoverer)
-	mux.Use(WriteToConsole)
+	mux.Use(NoSurf)
+
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
 	return mux
