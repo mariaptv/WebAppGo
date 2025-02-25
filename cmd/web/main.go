@@ -8,6 +8,8 @@ import (
 	"github.com/mariaptv/WebAppGo/pkg/config"
 	"github.com/mariaptv/WebAppGo/pkg/handlers"
 	"github.com/mariaptv/WebAppGo/pkg/render"
+	"github.com/alexedwards/scs/v2"
+	"time"
 )
 
 const portNumber = ":8080"
@@ -15,6 +17,11 @@ const portNumber = ":8080"
 // main is the main function
 func main() {
 	var app config.AppConfig
+
+	//Initialize session, which the web app will give you info about the user who is in the browser
+
+	session := scs.New()
+	session.Lifetime = 24 * time.Hour
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
