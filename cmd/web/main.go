@@ -5,23 +5,30 @@ import (
 	"log"
 	"net/http"
 
+	"time"
+
+	"github.com/alexedwards/scs/v2"
 	"github.com/mariaptv/WebAppGo/pkg/config"
 	"github.com/mariaptv/WebAppGo/pkg/handlers"
 	"github.com/mariaptv/WebAppGo/pkg/render"
-	"github.com/alexedwards/scs/v2"
-	"time"
 )
 
 const portNumber = ":8080"
 
+var app config.AppConfig
+var session *scs.SessionManager
+
 // main is the main function
 func main() {
-	var app config.AppConfig
 
 	//Initialize session, which the web app will give you info about the user who is in the browser
+	app.InProduction = false
 
-	session := scs.New()
+	session = scs.New()
 	session.Lifetime = 24 * time.Hour
+	session.Cookie.Persist = true
+	session.Cookie.SameSite = http.SameSiteLaxMode
+	session.Cookie.Secure = app.InProduction
 
 	tc, err := render.CreateTemplateCache()
 	if err != nil {

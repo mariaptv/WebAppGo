@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"text/template"
 )
 
@@ -10,4 +11,6 @@ import (
 type AppConfig struct {
 	UseCache      bool
 	TemplateCache map[string]*template.Template
+	InfoLog     *log.Logger
+	InProduction bool
 }
