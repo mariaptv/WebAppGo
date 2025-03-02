@@ -7,6 +7,12 @@
                 <h1>This is the about page</h1>
                 <p> This is a paragraph about the about page</p>
                 <p> this cam from the templae : {{index .StringMap "test"}}</p>
+            <p> 
+            {{if ne (index .StringMap "remote_ip") "test"}}
+                Your IP address is {{index .StringMap "remote_ip"}}
+                {{else}}
+                Your IP address is not available
+            {{end}}</p>
             </div>
         </div>
     </div>
